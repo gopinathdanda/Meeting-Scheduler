@@ -155,7 +155,7 @@
 				<td></td>
 			</tr>
 		</table>
-		<input type="hidden" value="0" name="selected">
+		<input type="hidden" value="0" name="selected" id="arrSel">
 		<input type="text" value="Enter your name" name="uname">
 		<input type="email" value="Enter your email (optional)" name="email"><br/>
 		<input type="submit" value="Submit">
@@ -165,6 +165,7 @@
     <script src="js/bootstrap.min.js"></script>
 	<script>
 	$(document).ready(function(){
+		var selected=[];
 		$('td:not(:first-child)').click(function(){
 			if($(this).hasClass('selected')){
 				$(this).removeClass('selected');
@@ -172,6 +173,21 @@
 				$(this).addClass('selected');
 			}
 		});
+		
+		$('td').click(function(){
+			var col = $(this).parent().children().index($(this));
+			var row = $(this).parent().parent().children().index($(this).parent());
+			if(col>0 && row>0){
+				var comb=row+'.'+col;
+				if(selected.indexOf(comb)!=-1){
+					selected.splice(selected.indexOf(comb),1);
+				}else{
+					selected.push(comb);
+				}
+				console.log(selected);
+			}
+			$('#arrSel').val(selected);
+		})
 		
 		$('input[type="text"],input[type="email"]').focusin(function(){
 			if($(this).val()=='Enter your name' && $(this).attr('type')=='text'){
